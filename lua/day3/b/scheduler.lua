@@ -14,8 +14,6 @@ local function schedule(time, action)
       time   = time,
       action = action
    }
-
-   sort_by_time(pending)
 end
 -- END:schedule
 
@@ -24,7 +22,6 @@ local function remove_first(array)
    result        = array[1]
    array[1]      = array[#array]
    array[#array] = nil
-
    return result
 end
 -- END:remove_first
@@ -38,6 +35,7 @@ end
 -- START:run
 local function run()
    while #pending > 0 do
+      sort_by_time(pending)
       while os.clock() < pending[1].time do end -- busy-wait
 
       local item = remove_first(pending)
